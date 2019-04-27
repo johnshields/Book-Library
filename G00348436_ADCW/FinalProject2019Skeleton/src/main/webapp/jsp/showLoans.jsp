@@ -11,22 +11,31 @@
 <title>showLoans</title>
 </head>
 <body>
-	<h1>showLoans</h1>
+	<h1>List of Loans</h1>
 		<table>
 			<tr>
 				<th>Loan ID</th>
-				<th>Due Date</th>
-				<th>bid</th>
-				<th>cid</th>
+	            <th>Customer ID</th>
+	            <th>Book ID</th>
+	           	<th>Book Title</th>
+	            <th>Book Author</th>
+	            <th>Due Date</th>
 			</tr>
 			<c:forEach items="${loans}" var="loan">
 			<tr> 
 		    	<td>${loan.lid}</td>
-		    	<td>${loan.dueDate}</td>
-		    	<td>${loan.book}</td>
-		    	<td>${loan.cust}</td>
+                <td>${loan.cust.cId}</td>
+                <td>${loan.cust.cName}</td>
+                <td>${loan.book.title}</td>
+				<td>${loan.book.author}</td>
+				<td>${loan.dueDate}</td>
     		</tr>
 		</c:forEach>
 		</table>
  </body>
+ <a href="/">Home</a> <a href="/newLoan">New Loan</a>
+ <a href="/deleteLoan">Delete Loan</a>
+ <a href="/showBooks">List Books</a> 
+ <a href="/showCustomers">List Customers</a>
+ <a href="/logout">Logout</a>
 </html>

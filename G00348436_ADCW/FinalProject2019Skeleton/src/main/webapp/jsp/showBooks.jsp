@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1"%>
+	pageEncoding="ISO-8859-1"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
@@ -11,7 +11,7 @@
 <title>showBooks</title>
 </head>
 <body>
-	<h1>showBooks</h1>
+	<h1>List of Books</h1>
 		<table>
 			<tr>
 				<th>Book ID</th>
@@ -26,5 +26,10 @@
     		</tr>
 		</c:forEach>
 		</table>
+		
  </body>
+ <a href="/">Home</a> <a href="/addBook">Add Book</a> 
+ <a href="/showCustomers">List Customers</a> 
+ <a href="/showLoans">List Loans</a>
+ <a href="/logout">Logout</a>
 </html>
