@@ -5,7 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.sales.exceptions.BooknLoanNotFound;
+import com.sales.exceptions.LoanNotFound;
 import com.sales.models.Loan;
 import com.sales.repositories.LoanRepository;
 
@@ -31,13 +31,13 @@ public class LoanService {
 	}
 	
 	//delete loan
-	public void delete(Loan loan)throws BooknLoanNotFound{
+	public void delete(Loan loan)throws LoanNotFound{
 		//find one loan selected to delete
 		loanRepository.findOne(loan.getLid());
-		if(loanRepository ==null) 
+		if(loanRepository == null) 
 		{
 			//exception error for LoanNotFound
-			throw new BooknLoanNotFound("No such Loan: " + loan.getLid());
+			throw new LoanNotFound("No such Loan: " + loan.getLid());
 		}
 		//delete loan
 		loanRepository.delete(loan);

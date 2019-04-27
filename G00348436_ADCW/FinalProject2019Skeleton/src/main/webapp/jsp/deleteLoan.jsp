@@ -5,33 +5,28 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Add Loan</title>
+<title>Delete Loan</title>
 </head>
 <body>
-  <h1>Add Loan</h1>
+  <h1>Delete Loan</h1>
   
   <form:form modelAttribute="loan">
      <table>
       <tr>
-        <td>Customer ID:</td>
-        <td><form:input path="cust"></form:input></td>
-        <td><form:errors path="cust"></form:errors></td>
-      </tr>
-      <tr>
-        <td>Book ID:</td>
-        <td><form:input path="book"></form:input></td>
-        <td><form:errors path="book"></form:errors></td>
+        <td>Loan ID:</td>
+        <td><form:input path="lid"></form:input></td>
+        <td><form:errors path="lid"></form:errors></td>
       </tr>
       <tr>
         <td colspan="2">
-          <input type="submit" value="Loan Book!"/>
+          <input type="submit" value="Delete"/>
         </td>
       </tr>
     </table> 
-   </form:form>
+  </form:form>
 </body>
-<a href="/">Home</a> <a href="/showLoans">List Loans</a>
-<a href="/deleteLoan">Delete Loan</a>
+<a href="/">Home</a> <a href="/showBooks">List Books</a>
 <a href="/addBook">Add Book</a> 
 <a href="/addCustomer">Add Customer</a>
+<a href="/newLoan">New Loan</a>
 </html>

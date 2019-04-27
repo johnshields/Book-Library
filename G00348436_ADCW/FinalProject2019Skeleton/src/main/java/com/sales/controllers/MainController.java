@@ -1,6 +1,5 @@
 package com.sales.controllers;
 
-
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
@@ -14,8 +13,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
 import com.sales.exceptions.BookAlreadyOnLoan;
-import com.sales.exceptions.CustomerNotFound;
-import com.sales.exceptions.BooknLoanNotFound;
+import com.sales.exceptions.BookNotFound;
+import com.sales.exceptions.BooknCustomerNotFound;
+import com.sales.exceptions.LoanNotFound;
 import com.sales.models.Book;
 import com.sales.models.Customer;
 import com.sales.models.Loan;
@@ -39,10 +39,10 @@ public class MainController {
 	// list all books
 	@RequestMapping(value = "/showBooks", method=RequestMethod.GET)
 	public String GetBooks(Model model) {
-		//List<Book> books = bookService.findAll();
 		System.out.print("showBooks");
 		// list books
-		List<Book> books = (List<Book>) bs.findAll();
+		//List<Book> books = (List<Book>) bs.findAll();
+		List<Book> books = bs.findAll();
 		model.addAttribute("books", books);
 			return "showBooks";
 	} 
@@ -62,18 +62,64 @@ public class MainController {
 		if(result.hasFieldErrors()) {			
 			return "addBook";
 		// save/add button - redirects to showBooks
-		}else{
+		}
+		else{
 			bs.save(book);
 			return "redirect:showBooks";
-		}		
+		}	
+		// only need to do for loan, to catch the error
+//		try
+//	      {
+//			  cs.save(book);
+//		  }
+//	      catch (BooknCustomerNotFound e){
+//				m.addAttribute("error", e);
+//				return "newLoanError";
+//			}
+//	     return "redirect:showBooks";
 	}
+	
+    //delete book // not exactly working
+    @RequestMapping(value = "/deleteBook", method = RequestMethod.GET)
+    public String getDeleteBook(@ModelAttribute("book") Book book, HttpServletRequest h) {
+      return "deleteBook";
+    }
+    
+    //post delete book
+    @RequestMapping(value = "/deleteBook", method = RequestMethod.POST)
+    public String deleteBook(@Valid @ModelAttribute("book") Book book,BindingResult result, Model m) {
+
+    	// delete book
+    	if(result.hasFieldErrors()) 
+    	{
+			return "deleteBook";
+		}
+    	else
+    	{
+            bs.delete(book);
+        }
+    	//delete exception
+		try
+		{
+			bs.delete(book);
+		}
+		catch (BookNotFound e)
+		{
+			m.addAttribute("error", e);
+			//go to LoanNotFound.jsp
+			return "BookNotFound";
+		}
+//		// button redirects to List of Loans
+		return "redirect:showBooks";
+    }
 	
 	// list all customers
 	@RequestMapping(value = "/showCustomers", method=RequestMethod.GET)                   
 	public String GetCustomers(Model model) {
 		System.out.print("showCustomers");
 		// list customers
-		List<Customer> customers = (List<Customer>) cs.findAll();
+		//List<Customer> customers = (List<Customer>) cs.findAll();
+		List<Customer>customers = cs.findAll();
 		model.addAttribute("customers", customers);
 			return "showCustomers";
 	} 
@@ -88,24 +134,27 @@ public class MainController {
 
 	//post customer
 	@RequestMapping(value = "/addCustomer", method = RequestMethod.POST)
-	public String postCustomer(@Valid @ModelAttribute("customer") Customer customer,BindingResult result) {
+	public String postCustomer(@Valid @ModelAttribute("customer") Customer customer,BindingResult result, Model m) {
 
 		// blank error
 		if(result.hasFieldErrors()) {			
 			return "addCustomer";
 		// save/add button - redirects to showCustomers
-		}else{
+		}
+		else{
 			cs.save(customer);
 			return "redirect:showCustomers";
 		}	
-	}
+	 }
+	
 	
 	// list all loans
 	@RequestMapping(value = "/showLoans", method=RequestMethod.GET)                   
 	public String GetLoans(Model model) {
 		System.out.print("showLoans");
 		// list customers
-		List<Loan> loans = (List<Loan>) ls.findAll();
+		//List<Loan> loans = (List<Loan>) ls.findAll();
+		List<Loan> loans = ls.findAll();
 		model.addAttribute("loans", loans);
 			return "showLoans";
 	} 
@@ -135,21 +184,20 @@ public class MainController {
       {
 		  ls.save(loan);
 	  }
-      catch (CustomerNotFound | BookAlreadyOnLoan e){
+      catch (BooknCustomerNotFound | BookAlreadyOnLoan e){
 			m.addAttribute("error", e);
 			return "newLoanError";
 		}
      return "redirect:showLoans";
     }
     
-    //delete loan //does not delete lid
+    //delete loan
     @RequestMapping(value = "/deleteLoan", method = RequestMethod.GET)
     public String getDeleteLoan(@ModelAttribute("loan") Loan loan, HttpServletRequest h) {
-      return "newLoan";
+      return "deleteLoan";
     }
     
-    
-    //post delete loan //NEED TO FIX
+    //post delete loan
     @RequestMapping(value = "/deleteLoan", method = RequestMethod.POST)
     public String deleteLoan(@Valid @ModelAttribute("loan") Loan loan,BindingResult result, Model m) {
 
@@ -162,20 +210,22 @@ public class MainController {
 //    	{
 //            ls.delete(loan);
 //        }
-    	//exception
+    	//delete exception // not exactly working
 		try
 		{
 			ls.delete(loan);
 		}
-		catch (BooknLoanNotFound e)
+		catch (LoanNotFound e)
 		{
 			m.addAttribute("error", e);
+			//go to LoanNotFound.jsp
 			return "LoanNotFound";
 		}
+		// button redirects to List of Loans
 		return "redirect:showLoans";
     }
-    
-    // security - login 
+     
+    // security - login // not exactly working
     @RequestMapping(value = "/login", method=RequestMethod.GET)
 	public String login(Model model) {
 		

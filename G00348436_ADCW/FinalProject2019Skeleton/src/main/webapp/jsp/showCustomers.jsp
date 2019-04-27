@@ -33,6 +33,6 @@
         </i:forEach>
 </body>
 <a href="/">Home</a> <a href="/addCustomer">Add Customer</a>
-<a href="/showBooks">List Book</a> 
+<a href="/showBooks">List Books</a> 
 <a href="showLoans">List Loans</a>
 </html>
