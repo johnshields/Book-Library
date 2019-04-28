@@ -10,11 +10,12 @@
 <body>
 	<h1>Could not delete Book, book does not Exist!</h1>
 	
-	<c:forEach items="${books}" var="book">
-	<h3>Book: ${book.bid} ( ${book.title} )</h3>
-	</c:forEach>
+	<c:forEach items="${books}" var="book"> 
+	<h3>Book: ${book.bid} ( ${book.title} )</h3> 
+ 	</c:forEach> 
 	
 	<h1>${error.message}</h1>
+	
 	
 </body>
 <a href="/showBooks">List Books</a>

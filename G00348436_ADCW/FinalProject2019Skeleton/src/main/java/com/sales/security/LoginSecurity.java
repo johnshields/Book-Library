@@ -13,16 +13,17 @@ public class LoginSecurity extends WebSecurityConfigurerAdapter
 	@Override
 	public void configure(HttpSecurity httpSecurity) throws Exception
 	{
+		// block access to pages
 		httpSecurity.authorizeRequests().antMatchers("/", "/showBooks", "/showCustomers", "/showLoans", 
 				"/addBook", "/addCustomer", "/newLoan", "/deleteLoan" , "/deleteBook"	)
 		.hasRole("USER").and().formLogin().and().logout()
 		.logoutRequestMatcher(new AntPathRequestMatcher("/logout")).logoutSuccessUrl("/");
 	}
 	
+	// allow all pages to user named 'user'
 	@Autowired
 	public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception
 	{
-	
 		auth.inMemoryAuthentication().withUser("user").password("user").roles("USER");
 	}
 }
