@@ -13,7 +13,7 @@ public class LoginSecurity extends WebSecurityConfigurerAdapter
 	@Override
 	public void configure(HttpSecurity httpSecurity) throws Exception
 	{
-		// block access to pages
+		// url pages that the user can access once logged in.
 		httpSecurity.authorizeRequests().antMatchers("/", "/showBooks", "/showCustomers", "/showLoans", 
 				"/addBook", "/addCustomer", "/newLoan", "/deleteLoan" , "/deleteBook"	)
 		.hasRole("USER").and().formLogin().and().logout()

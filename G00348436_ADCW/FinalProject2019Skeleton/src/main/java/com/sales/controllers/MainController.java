@@ -60,7 +60,7 @@ public class MainController {
 	@RequestMapping(value = "/addBook", method = RequestMethod.POST)
 	public String postBook(@Valid @ModelAttribute("book") Book book,BindingResult result) {
 
-		// blank input error
+		// blank/invalid input error
 		if(result.hasFieldErrors()) {			
 			return "addBook";
 		// save/add button - redirects to showBooks
@@ -72,16 +72,6 @@ public class MainController {
 			// redirects to List Of Books
 			return "redirect:showBooks";
 		}	
-		// only need to do for loan, to catch the exception error
-//		try
-//	      {
-//			  cs.save(book);
-//		  }
-//	      catch (BooknCustomerNotFound e){
-//				m.addAttribute("error", e);
-//				return "BookNotFound";
-//			}
-//	     return "redirect:showBooks";
 	}
 	
 	// trying out delete a book
@@ -147,7 +137,7 @@ public class MainController {
 	@RequestMapping(value = "/addCustomer", method = RequestMethod.POST)
 	public String postCustomer(@Valid @ModelAttribute("customer") Customer customer,BindingResult result, Model m) {
 
-		// blank error
+		// blank/invalid input error
 		if(result.hasFieldErrors()) {			
 			return "addCustomer";
 		// save/add button - redirects to showCustomers
@@ -171,8 +161,7 @@ public class MainController {
 			return "showLoans";
 	} 
 	
-	
-	//add loan - due date not working
+	//add loan
     @RequestMapping(value = "/newLoan", method = RequestMethod.GET)
     public String getNewLoan(@ModelAttribute("loan") Loan loan, HttpServletRequest h) {
      // returns New Loan Page
@@ -183,7 +172,7 @@ public class MainController {
     @RequestMapping(value = "/newLoan", method = RequestMethod.POST)
     public String postNewLoan(@Valid @ModelAttribute("loan") Loan loan,BindingResult result, Model m) {
 
-      // blank error
+      // blank/invalid input error
       if(result.hasFieldErrors()) 
       {      
         return "newLoan";
@@ -216,6 +205,7 @@ public class MainController {
     //post delete loan
     @RequestMapping(value = "/deleteLoan", method = RequestMethod.POST)
     public String deleteLoan(@Valid @ModelAttribute("loan") Loan loan,BindingResult result, Model m) {
+    	
     	// delete blank/invalid loan error
     	if(result.hasFieldErrors()) 
     	{
@@ -251,7 +241,7 @@ public class MainController {
     // security - logout 
     @RequestMapping(value = "/logout", method=RequestMethod.GET)
 	public String logout(Model model) {
-		
+    	// return login security
 		return "logout";		
 	} 
 }
